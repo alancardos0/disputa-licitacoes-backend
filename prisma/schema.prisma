@@ -1,0 +1,40 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id       Int    @id @default(autoincrement())
+  email    String @unique
+  password String
+
+  name String
+}
+
+model Auction {
+  id          Int      @id @default(autoincrement())
+  description String
+  title       String
+  endTime     DateTime
+
+  @@map("auctions")
+}
+
+model Bid {
+  bidid      Int      @id @default(autoincrement())
+  auctionId  Int
+  id         Int
+  name       String
+  email      String
+  amount     String
+  created_at DateTime @default(now())
+
+  @@map("auctionbids")
+}
